@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 21:08:58 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/11 21:16:55 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/12 15:31:26 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,3 +33,5 @@ char	**separate_cmd(char *cmd, int words, int i, int j, int k)
 	cmd_words[j] = NULL;
 	return (cmd_words);
 }
+
+bool	check_execution(char *path, char **cmd, char)

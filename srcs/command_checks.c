@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:17:58 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/11 21:34:52 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/12 15:21:01 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char *find_path(char **env)
 	return (NULL);
 }
 
-char	**is_valid(char *cmd, char **path)
+char	*is_valid(char *cmd, char **path)
 {
 	char *temp_cmd;
 	int	i;
@@ -44,27 +44,17 @@ char	**is_valid(char *cmd, char **path)
 	return (NULL);
 }
 
-bool	check_command(char *cmd1, char *cmd2, char **env)
+char	*check_command(char *cmd, char **path_apart)
 {
-	char *path;
-	char **path_apart;
-	char	*valid_path1;
-	char	*valid_path2;
+	char	*valid_path;
 	
-	path = find_path(env);
-	path = &path[5];
-	path_apart = ft_split(path, ':');
-	cmd1 = ft_strjoin("/", cmd1);
-	cmd2 = ft_strjoin("/", cmd2);
-	valid_path1 = is_valid(cmd1, path_apart);
-	valid_path2 = is_valid(cmd2, path_apart);
-	free(cmd1);
-	free(cmd2);
-	ptr_free(path_apart);
-	if (valid_path1 && ) //fazer um de cada vez pq precisa retornar o comando;
-		return (true);
+	cmd = ft_strjoin("/", cmd);
+	valid_path = is_valid(cmd, path_apart);
+	free(cmd);
+	if (valid_path) 
+		return (valid_path);
 	else
-		return (false);
+		return (NULL);
 }
 
 char	**find_cmd_words(char *cmd)
@@ -90,18 +80,23 @@ char	**find_cmd_words(char *cmd)
 
 bool	commands_management(char* cmd1, char *cmd2, char **env)
 {
-	int i = -1;
-	char **a = find_cmd_words(cmd1);
-	printf("%s\n", cmd1);
-	while (a[++i])
-		printf("%s\n", a[i]);
-	char **b = find_cmd_words(cmd2);
-	i = -1;
-	while (b[++i])
-		printf("%s\n", b[i]);
-	if (check_command(a[0], b[0], env))
-		printf("valids commands\n");
-	else 
-		printf("invalids commands\n");	
+	char *path1;
+	char	*path2;
+	char **path_apart;
+	char	**cmd_words1;
+	char	**cmd_words2;
+
+	path1 = find_path(env);
+	path1 = &path1[5];
+	path_apart = ft_split(path1, ':');
+	cmd_words1 = find_cmd_words(cmd1);
+	path1 = check_command(cmd_words1[0], path_apart);
+	cmd_words2 = find_cmd_words(cmd2);
+	path2 = check_command(cmd_words2[0], path_apart);
+	ptr_free(path_apart);
+	ptr_free(cmd_words1);
+	ptr_free(cmd_words2);
+	free(path1);
+	free(path2);	
 	return (true);
 }
