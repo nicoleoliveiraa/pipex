@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:17:58 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/12 15:21:01 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:28:48 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char *find_path(char **env)
 	while(env[i])
 	{
 		if(!ft_strncmp(env[i], "PATH=", 5))	
-			return (env[i]);
+			return (env[i] + 5);
 		else
 			i++;
 	}
@@ -63,6 +63,8 @@ char	**find_cmd_words(char *cmd)
 	int words;
 	char **cmd_words;
 
+	if (!cmd)
+		return (NULL);
 	i = 0;
 	words = 1;
 	while(cmd[i])
@@ -78,25 +80,20 @@ char	**find_cmd_words(char *cmd)
 	return (cmd_words);	
 }
 
-bool	commands_management(char* cmd1, char *cmd2, char **env)
+void	commands_management(char* cmd1, char *cmd2, char **env, t_cmds *cmds)
 {
-	char *path1;
-	char	*path2;
+	char *path;
 	char **path_apart;
-	char	**cmd_words1;
-	char	**cmd_words2;
 
-	path1 = find_path(env);
-	path1 = &path1[5];
-	path_apart = ft_split(path1, ':');
-	cmd_words1 = find_cmd_words(cmd1);
-	path1 = check_command(cmd_words1[0], path_apart);
-	cmd_words2 = find_cmd_words(cmd2);
-	path2 = check_command(cmd_words2[0], path_apart);
+	path = find_path(env);
+	if (path)
+		path_apart = ft_split(path, ':');
+	cmds->cmd_1 = find_cmd_words(cmd1);
+	cmds->cmd_2 = find_cmd_words(cmd2);
+	if (!cmds->cmd_1 || !cmds->cmd_2)
+		return ;
+	cmds->path_1 = check_command(cmds->cmd_1[0], path_apart);
+	cmds->path_2 = check_command(cmds->cmd_2[0], path_apart);
 	ptr_free(path_apart);
-	ptr_free(cmd_words1);
-	ptr_free(cmd_words2);
-	free(path1);
-	free(path2);	
-	return (true);
+	free(path);
 }
