@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:17:58 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/15 16:28:48 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/16 18:10:12 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,13 @@ char	*check_command(char *cmd, char **path_apart)
 		return (NULL);
 }
 
-char	**find_cmd_words(char *cmd)
+int	count_words(char *cmd)
 {
 	int	i;
 	int words;
-	char **cmd_words;
-
+	
 	if (!cmd)
-		return (NULL);
+		return (0);
 	i = 0;
 	words = 1;
 	while(cmd[i])
@@ -76,8 +75,19 @@ char	**find_cmd_words(char *cmd)
 		}
 		i++;
 	}
-	cmd_words = separate_cmd(cmd, words, 0, 0, 0);
-	return (cmd_words);	
+	return (words);
+}
+
+void	find_cmd_words(char *cmd1, char *cmd2, t_cmds *cmds)
+{
+	int words;
+	
+	words = count_words(cmd1);
+	cmds->cmd_1 = malloc(sizeof(char *) * (words + 1));
+	cmds->cmd_1 = separate_cmd(cmd1, words, 0);
+	words = count_words(cmd2);
+	cmds->cmd_2 = malloc(sizeof(char *) * (words + 1));
+	cmds->cmd_2 = separate_cmd(cmd2, words, 0);	
 }
 
 void	commands_management(char* cmd1, char *cmd2, char **env, t_cmds *cmds)
@@ -88,8 +98,7 @@ void	commands_management(char* cmd1, char *cmd2, char **env, t_cmds *cmds)
 	path = find_path(env);
 	if (path)
 		path_apart = ft_split(path, ':');
-	cmds->cmd_1 = find_cmd_words(cmd1);
-	cmds->cmd_2 = find_cmd_words(cmd2);
+	find_cmd_words(cmd1, cmd2, cmds);
 	if (!cmds->cmd_1 || !cmds->cmd_2)
 		return ;
 	cmds->path_1 = check_command(cmds->cmd_1[0], path_apart);
