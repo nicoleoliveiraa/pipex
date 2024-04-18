@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:17:58 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/16 18:10:12 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/18 22:33:55 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,22 @@ char	*is_valid(char *cmd, char **path)
 	{
 		temp_cmd = ft_strjoin(path[i], cmd);
 		if (!access(temp_cmd, F_OK))
+		{
 			return (temp_cmd);
+		}
 		free(temp_cmd);
 		i++;		
 	}
 	return (NULL);
 }
 
-char	*check_command(char *cmd, char **path_apart)
+void	check_command(t_cmds *cmds, char **path_apart)
 {
-	char	*valid_path;
+	char *cmd;
 	
-	cmd = ft_strjoin("/", cmd);
-	valid_path = is_valid(cmd, path_apart);
+	cmd = ft_strjoin("/", cmds->cmd[0]);
+	cmds->path = is_valid(cmd, path_apart);
 	free(cmd);
-	if (valid_path) 
-		return (valid_path);
-	else
-		return (NULL);
 }
 
 int	count_words(char *cmd)
@@ -78,19 +76,16 @@ int	count_words(char *cmd)
 	return (words);
 }
 
-void	find_cmd_words(char *cmd1, char *cmd2, t_cmds *cmds)
+void	find_cmd_words(char *cmd1, t_cmds *cmds)
 {
 	int words;
 	
 	words = count_words(cmd1);
-	cmds->cmd_1 = malloc(sizeof(char *) * (words + 1));
-	cmds->cmd_1 = separate_cmd(cmd1, words, 0);
-	words = count_words(cmd2);
-	cmds->cmd_2 = malloc(sizeof(char *) * (words + 1));
-	cmds->cmd_2 = separate_cmd(cmd2, words, 0);	
+	cmds->cmd = malloc(sizeof(char *) * (words + 1));
+	cmds->cmd = separate_cmd(cmd1, words);
 }
 
-void	commands_management(char* cmd1, char *cmd2, char **env, t_cmds *cmds)
+void	commands_management(char* cmd1, char **env, t_cmds *cmds)
 {
 	char *path;
 	char **path_apart;
@@ -98,11 +93,10 @@ void	commands_management(char* cmd1, char *cmd2, char **env, t_cmds *cmds)
 	path = find_path(env);
 	if (path)
 		path_apart = ft_split(path, ':');
-	find_cmd_words(cmd1, cmd2, cmds);
-	if (!cmds->cmd_1 || !cmds->cmd_2)
-		return ;
-	cmds->path_1 = check_command(cmds->cmd_1[0], path_apart);
-	cmds->path_2 = check_command(cmds->cmd_2[0], path_apart);
+	find_cmd_words(cmd1, cmds);
+	if (!cmds->cmd)
+		error();
+	check_command(cmds, path_apart);
 	ptr_free(path_apart);
-	free(path);
+	//free(path);
 }

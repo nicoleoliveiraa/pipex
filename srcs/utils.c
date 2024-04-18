@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 17:00:29 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/15 17:01:33 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/18 16:39:33 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,3 +17,4 @@ void	error(void)
 	perror("Error");
 	exit(EXIT_FAILURE);
 }
+

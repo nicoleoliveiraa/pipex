@@ -6,23 +6,25 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 21:08:58 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/16 18:01:35 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/18 21:38:41 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-char	**separate_cmd(char *cmd, int words, int k)
+char	**separate_cmd(char *cmd, int words)
 {
 	char	**cmd_words;
 	int	i;
 	int j;
+	int k;
 
 	cmd_words = malloc(sizeof(char *) * (words + 1));
 	if(!cmd_words)
 		return (NULL);
 	i = 0;
 	j = 0;
+	k = 0;
 	while(words > j)
 	{
 		while (cmd[i] == ' ' && cmd[i])

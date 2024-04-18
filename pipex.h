@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:23:05 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/16 18:05:05 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/18 21:52:42 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
-# include <strings.h>
+# include <string.h>
 # include <fcntl.h>
 # include <limits.h>
 # include <stdbool.h>
@@ -25,26 +25,24 @@
 
 typedef struct	s_cmds
 {
-	char	*path_1;
-	char	*path_2;
-	char	**cmd_1;
-	char	**cmd_2;
+	char	*path;
+	char	**cmd;
 }	t_cmds;
 
 
 //command checks
 char *find_path(char **env);
 char	*is_valid(char *cmd, char **path);
-char	*check_command(char *cmd, char **path_apart);
-void	commands_management(char* cmd1, char *cmd2, char **env, t_cmds *cmds);
-void	find_cmd_words(char *cmd1, char *cmd2, t_cmds *cmds);
-char	**separate_cmd(char *cmd, int words, int k);
+void	check_command(t_cmds *cmds, char **path_apart);
+void	commands_management(char* cmd1, char **env, t_cmds *cmds);
+void	find_cmd_words(char *cmd1, t_cmds *cmds);
+char	**separate_cmd(char *cmd, int words);
 
 //execute
-void	execute(char **argv, char **env, t_cmds *cmds);
-int	open_file(char *file);
-void	do_parent_proc(char **env, t_cmds *cmds, int outfile, int *fd);
-void	do_child_proc(char **env, t_cmds *cmds, int infile, int *fd);
+void	execute(t_cmds *cmds, char **env);
+int	open_outfile(char *file);
+int	open_infile(char *file);
+void	do_child_proc(t_cmds *cmds, char **env);
 
 void	error(void);
 
