@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:00:00 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/18 22:54:22 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:35:37 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int	main(int argc, char **argv, char **env)
 	while (i < argc - 2)
 	{
 		commands_management(argv[i], env, &cmds);
-		printf("%s\n", cmds.cmd[0]);
-		//printf("%s\n", cmds.cmd[1]);
 		do_child_proc(&cmds, env);
 		i++;
 	}

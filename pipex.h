@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:23:05 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/18 21:52:42 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/19 16:02:08 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <limits.h>
 # include <stdbool.h>
 # include <sys/wait.h>
+# include <errno.h>
 # include "./libft/libft.h"
 
 typedef struct	s_cmds
@@ -45,5 +46,7 @@ int	open_infile(char *file);
 void	do_child_proc(t_cmds *cmds, char **env);
 
 void	error(void);
+void	make_free(t_cmds *cmds);
+void	check_error(t_cmds *cmds);
 
 #endif

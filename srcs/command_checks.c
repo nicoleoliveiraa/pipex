@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:17:58 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/18 22:33:55 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/19 16:50:36 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	commands_management(char* cmd1, char **env, t_cmds *cmds)
 	char *path;
 	char **path_apart;
 
+	path_apart = NULL;
 	path = find_path(env);
 	if (path)
 		path_apart = ft_split(path, ':');
@@ -98,5 +99,4 @@ void	commands_management(char* cmd1, char **env, t_cmds *cmds)
 		error();
 	check_command(cmds, path_apart);
 	ptr_free(path_apart);
-	//free(path);
 }

@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 21:08:58 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/18 21:38:41 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:42:41 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	**separate_cmd(char *cmd, int words)
 	k = 0;
 	while(words > j)
 	{
-		while (cmd[i] == ' ' && cmd[i])
+		while (cmd[i] && (cmd[i] == ' ' || cmd[i] == 39))
 			i++;
 		k = i;
 		while (cmd[i] && cmd[i] != ' ')
