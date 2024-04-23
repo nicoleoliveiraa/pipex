@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:44:47 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/23 21:32:29 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/23 20:18:15 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,8 @@ int	open_infile(char *file, char **argv)
 	fd = open(file, O_RDONLY, 0444);
 	if (fd < 0)
 	{
-		ft_putstr_fd("pipex: ", 2);
 		perror(argv[1]);
-		exit(0);
+		exit(1);
 	}
 	return (fd);
 }

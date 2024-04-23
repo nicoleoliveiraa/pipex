@@ -6,11 +6,16 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:00:00 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/23 21:23:17 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/23 21:20:46 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
+
+void	here_doc(char *limiter)
+{
+	
+}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -21,10 +26,19 @@ int	main(int argc, char **argv, char **env)
 	
 	if (argc < 5)
 		return (1);
-	infile = open_infile(argv[1], argv);
-	outfile = open_outfile(argv[argc - 1]);
-	dup2(infile, STDIN_FILENO);
-	i = 2;
+	if (!ft_strncmp(argv[1], "here_doc", 6))
+	{
+		outfile = open_outfile(argv[argc - 1]);
+		here_doc(argv[2]);
+		i = 3;
+	}
+	else
+	{
+		infile = open_infile(argv[1], argv);
+		outfile = open_outfile(argv[argc - 1]);
+		dup2(infile, STDIN_FILENO);
+		i = 2;
+	}
 	while (i < argc - 2)
 	{
 		commands_management(argv[i], env, &cmds);

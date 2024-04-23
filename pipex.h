@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:23:05 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/23 19:15:33 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/23 20:17:20 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct	s_cmds
 	char	**cmd;
 }	t_cmds;
 
+# define URANDOM_PATH ".pipex_urandom"
 
 //command checks
 char *find_path(char **env);
