@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:17:58 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/19 16:50:36 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/23 19:10:04 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char *find_path(char **env)
 	return (NULL);
 }
 
-char	*is_valid(char *cmd, char **path)
+/* char	*is_valid(char *cmd, char **path)
 {
 	char *temp_cmd;
 	int	i;
@@ -44,6 +44,23 @@ char	*is_valid(char *cmd, char **path)
 		i++;		
 	}
 	return (NULL);
+} */
+
+void	is_valid(char *cmd, char **path, t_cmds *cmds)
+{
+	int	i;
+	
+	i = 0;
+	while (path[i])
+	{
+		free(cmds->path);
+		cmds->path = ft_strjoin(path[i], cmd);
+		if (!access(cmds->path, F_OK))
+		{
+			return ;
+		}
+		i++;		
+	}
 }
 
 void	check_command(t_cmds *cmds, char **path_apart)
@@ -51,7 +68,7 @@ void	check_command(t_cmds *cmds, char **path_apart)
 	char *cmd;
 	
 	cmd = ft_strjoin("/", cmds->cmd[0]);
-	cmds->path = is_valid(cmd, path_apart);
+	is_valid(cmd, path_apart, cmds);
 	free(cmd);
 }
 
@@ -80,9 +97,18 @@ void	find_cmd_words(char *cmd1, t_cmds *cmds)
 {
 	int words;
 	
+	if (cmd1[0] == '\0')
+	{
+		cmds->cmd = NULL;
+		return ;
+	}
+	if (!cmd1)
+	{
+		cmds->cmd = NULL;
+		return ;
+	}
 	words = count_words(cmd1);
-	cmds->cmd = malloc(sizeof(char *) * (words + 1));
-	cmds->cmd = separate_cmd(cmd1, words);
+	separate_cmd(cmd1, words, cmds);
 }
 
 void	commands_management(char* cmd1, char **env, t_cmds *cmds)
@@ -95,8 +121,9 @@ void	commands_management(char* cmd1, char **env, t_cmds *cmds)
 	if (path)
 		path_apart = ft_split(path, ':');
 	find_cmd_words(cmd1, cmds);
-	if (!cmds->cmd)
-		error();
-	check_command(cmds, path_apart);
+	if (cmds->cmd[0][0] == '/')
+		cmds->path = ft_strdup(cmds->cmd[0]);
+	else if (cmds->cmd)
+		check_command(cmds, path_apart);
 	ptr_free(path_apart);
 }

@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:23:05 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/19 16:02:08 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/23 19:15:33 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,23 @@ typedef struct	s_cmds
 
 //command checks
 char *find_path(char **env);
-char	*is_valid(char *cmd, char **path);
+//char	*is_valid(char *cmd, char **path);
+void	is_valid(char *cmd, char **path, t_cmds *cmds);
 void	check_command(t_cmds *cmds, char **path_apart);
 void	commands_management(char* cmd1, char **env, t_cmds *cmds);
 void	find_cmd_words(char *cmd1, t_cmds *cmds);
-char	**separate_cmd(char *cmd, int words);
+void	separate_cmd(char *cmd, int words, t_cmds *cmds);
 
 //execute
 void	execute(t_cmds *cmds, char **env);
 int	open_outfile(char *file);
-int	open_infile(char *file);
+int	open_infile(char *file, char **argv);
 void	do_child_proc(t_cmds *cmds, char **env);
 
-void	error(void);
+void	error(int exit_status);
 void	make_free(t_cmds *cmds);
 void	check_error(t_cmds *cmds);
+void	clean_all(t_cmds *cmds);
+void	put_right_error(t_cmds *cmds, char *message, int error);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:00:00 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/19 15:35:37 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/23 19:15:44 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv, char **env)
 	if (argc < 5)
 		return (1);
 	i = 2;
-	infile = open_infile(argv[1]);
+	infile = open_infile(argv[1], argv);
 	outfile = open_outfile(argv[argc - 1]);
 	dup2(infile, STDIN_FILENO);
 	while (i < argc - 2)
@@ -31,8 +31,29 @@ int	main(int argc, char **argv, char **env)
 		do_child_proc(&cmds, env);
 		i++;
 	}
-	dup2(outfile, STDOUT_FILENO);
+	make_free(&cmds);
 	commands_management(argv[i], env, &cmds);
+	dup2(outfile, STDOUT_FILENO);
 	execute(&cmds, env);
 	return (0);
 }
+
+/* int main(int argc, char **argv, char **env)
+{
+	t_cmds	cmds;
+	int i;
+	
+	if (argc < 5)
+		return (1);
+	i = 2;
+	while (i <= argc - 2)
+	{
+		printf("%d\n", i);
+		commands_management(argv[i], env, &cmds);
+		printf("%s \n %s \n", cmds.cmd[0], cmds.path);
+		if(cmds.cmd && cmds.path)
+		do_child_proc(&cmds, env);
+		clean_all(&cmds);
+		i++;
+	}
+} */
