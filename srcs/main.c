@@ -6,11 +6,17 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:00:00 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/24 15:53:37 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/25 17:22:51 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
+
+void	init_cmds(t_cmds *cmds)
+{
+	cmds->cmd = NULL;
+	cmds->path = NULL;
+}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -25,6 +31,7 @@ int	main(int argc, char **argv, char **env)
 	outfile = open_outfile(argv[argc - 1]);
 	dup2(infile, STDIN_FILENO);
 	i = 2;
+	init_cmds(&cmds);
 	while (i < argc - 2)
 	{
 		commands_management(argv[i], env, &cmds);

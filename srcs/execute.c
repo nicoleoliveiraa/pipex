@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:44:47 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/23 21:32:29 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/25 17:22:03 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	do_child_proc(t_cmds *cmds, char **env)
 	{
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
-		waitpid(proc_id, NULL, 0);
+		waitpid(proc_id, NULL, WNOHANG);
 	}
 }
 
