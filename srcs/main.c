@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:00:00 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/26 19:17:59 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/26 19:19:59 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,7 @@ int	main(int argc, char **argv, char **env)
 {
 	t_cmds	cmds;
 	int		infile;
-	int		outfile;
 
-	outfile = 0;
 	if (argc < 5)
 		return (1);
 	init_cmds(&cmds);
