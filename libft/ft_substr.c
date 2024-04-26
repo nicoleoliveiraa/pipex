@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 11:53:30 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/19 14:42:34 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:03:39 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		subs[i] = s[start + i];
 		i++;
 	}
-	if (subs[i-1] == 39)
-		subs[i-1] = '\0';
+	if (subs[i - 1] == 39)
+		subs[i - 1] = '\0';
 	subs[i] = '\0';
 	return (subs);
 }

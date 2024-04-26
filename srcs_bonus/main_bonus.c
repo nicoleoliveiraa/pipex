@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:00:00 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/25 17:01:00 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/26 15:59:17 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	get_input(t_input *input)
 {
 	char	c;
-	int	i;
-	
+	int		i;
+
 	i = 0;
 	input->text = (malloc(10000));
 	if (!input->text)
@@ -34,35 +34,20 @@ void	get_input(t_input *input)
 	}
 }
 
-void here_doc(char *limiter)
+void	here_doc(char *limiter)
 {
-	int proc_id;
-	int fd[2];
-	t_input input;
-	
+	int		proc_id;
+	int		fd[2];
+	t_input	input;
+
 	limiter = ft_strjoin(limiter, "\n");
-	if(pipe(fd) == -1)
+	if (pipe(fd) == -1)
 		error(1);
 	proc_id = fork();
 	if (proc_id == -1)
 		error(1);
 	if (proc_id == 0)
-	{
-		close(fd[0]);
-		while (1)
-		{
-			get_input(&input);
-			if(!ft_strncmp(input.text, limiter, ft_strlen(input.text)))
-			{
-				free(limiter);
-				free(input.text);
-				close(fd[1]);
-				exit(0);
-			}
-			write(fd[1], input.text, (ft_strlen(input.text)));
-			free(input.text);
-		}
-	}
+		here_doc_child(limiter, &input, fd[0], fd[1]);
 	else
 	{
 		close(fd[1]);
@@ -76,41 +61,33 @@ void	init_cmds(t_cmds *cmds)
 {
 	cmds->cmd = NULL;
 	cmds->path = NULL;
+	cmds->outfile = -1;
+	cmds->i = 0;
 }
 
 int	main(int argc, char **argv, char **env)
 {
 	t_cmds	cmds;
-	int i;
-	int infile;
-	int outfile;
-	
+	int		infile;
+	int		outfile;
+
+	outfile = 0;
 	if (argc < 5)
 		return (1);
-	if (!ft_strncmp(argv[1], "here_doc", 8))
+	init_cmds(&cmds);
+	if (is_here_doc(argv))
 	{
-		outfile = open_outfile(argv[argc - 1]);
-		here_doc(argv[2]);
-		i = 3;
+		cmds.outfile = open_outfile(argv[argc - 1]);
+		cmds.i = 3;
 	}
 	else
 	{
 		infile = open_infile(argv[1], argv);
-		outfile = open_outfile(argv[argc - 1]);
+		cmds.outfile = open_outfile(argv[argc - 1]);
 		dup2(infile, STDIN_FILENO);
-		i = 2;
+		cmds.i = 2;
 	}
-	init_cmds(&cmds);
-	while (i < argc - 2)
-	{
-		commands_management(argv[i], env, &cmds);
-		do_child_proc(&cmds, env);
-		i++;
-	}
-	make_free(&cmds);
-	commands_management(argv[i], env, &cmds);
-	dup2(outfile, STDOUT_FILENO);
-	execute(&cmds, env);
+	pipex(argc, argv, env, &cmds);
 	return (0);
 }
 

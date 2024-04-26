@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:44:47 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/25 17:22:03 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/26 19:02:08 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	do_child_proc(t_cmds *cmds, char **env)
 {
-	int proc_id;
-	int fd[2];
+	int	proc_id;
+	int	fd[2];
 
-	if(pipe(fd) == -1)
+	if (pipe(fd) == -1)
 		error(1);
 	proc_id = fork();
 	if (proc_id == -1)
@@ -27,7 +27,8 @@ void	do_child_proc(t_cmds *cmds, char **env)
 		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
 		execute(cmds, env);
-	} else
+	}
+	else
 	{
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
@@ -37,8 +38,8 @@ void	do_child_proc(t_cmds *cmds, char **env)
 
 int	open_outfile(char *file)
 {
-	int fd;
-	
+	int	fd;
+
 	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (fd < 0)
 	{
@@ -50,8 +51,8 @@ int	open_outfile(char *file)
 
 int	open_infile(char *file, char **argv)
 {
-	int fd;
-	
+	int	fd;
+
 	fd = open(file, O_RDONLY, 0444);
 	if (fd < 0)
 	{

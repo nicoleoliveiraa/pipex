@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:20:16 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/23 19:25:26 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:01:28 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ static int	str_len(char const *s, char c)
 }
 
 void	*ptr_free(char **ptr)
-{	
-	int i;
+{
+	int	i;
 
-	i = 0;	
+	i = 0;
 	while (ptr[i])
 	{
 		free(ptr[i]);

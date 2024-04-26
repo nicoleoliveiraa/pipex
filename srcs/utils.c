@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 17:00:29 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/23 16:41:29 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:51:24 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	check_error(t_cmds *cmds)
 	{
 		clean_all(cmds);
 		ft_putstr_fd("command not found\n", 2);
-		exit(127);	
+		exit(127);
 	}
 }
 
