@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:17:58 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/26 14:26:38 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/27 16:58:58 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,12 @@ void	commands_management(char *cmd1, char **env, t_cmds *cmds)
 	if (path)
 		path_apart = ft_split(path, ':');
 	find_cmd_words(cmd1, cmds);
-	if (cmds->cmd[0][0] == '/')
-		cmds->path = ft_strdup(cmds->cmd[0]);
-	else if (cmds->cmd)
-		check_command(cmds, path_apart);
+	if (cmds->cmd != NULL)
+	{
+		if (cmds->cmd[0][0] == '/')
+			cmds->path = ft_strdup(cmds->cmd[0]);
+		else if (cmds->cmd)
+			check_command(cmds, path_apart);
+	}
 	ptr_free(path_apart);
 }

@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:00:00 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/26 19:19:59 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/27 18:22:14 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	here_doc(char *limiter)
 		here_doc_child(limiter, &input, fd[0], fd[1]);
 	else
 	{
+		if (limiter)
+			free(limiter);
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);

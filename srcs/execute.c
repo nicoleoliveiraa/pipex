@@ -6,7 +6,7 @@
 /*   By: nsouza-o <nsouza-o@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:44:47 by nsouza-o          #+#    #+#             */
-/*   Updated: 2024/04/26 19:02:08 by nsouza-o         ###   ########.fr       */
+/*   Updated: 2024/04/27 18:16:17 by nsouza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	do_child_proc(t_cmds *cmds, char **env)
 	{
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
-		waitpid(proc_id, NULL, WNOHANG);
+		waitpid(proc_id, NULL, 0);
 	}
 }
 
@@ -65,12 +65,14 @@ int	open_infile(char *file, char **argv)
 
 void	execute(t_cmds *cmds, char **env)
 {
+	if (!cmds->cmd)
+	{
+		ft_putstr_fd("command not found\n", 2);
+		make_free(cmds);
+		exit(1);
+	}
 	if (execve(cmds->path, cmds->cmd, env) == -1)
 	{
-		if (!cmds->cmd)
-		{
-			ft_putstr_fd("No such file or directory", 2);
-		}
 		put_right_error(cmds, "command not found", 127);
 	}
 }
